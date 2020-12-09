@@ -43,6 +43,41 @@ def evalArgs(name,map,mode,port):
     args = [mapMode,gameport,servername]
     return args
 
+def fetchMapList():
+    maps = []
+    logPath = "MCS/Saved/Logs/MCS.log"
+    if platform.system() != "Windows":
+        logPath = "./" + logPath
+    
+    try:
+        logFile = open(logPath)
+        lines = logFile.readlines()
+
+        startMapList = False
+
+        for line in lines:
+            if "ACTIVE MAP LIST" in line:
+                startMapList = True
+                continue
+            if startMapList:
+                if "========================" in line:
+                    break 
+
+               # m = line.split("[None] ")[1].split(" = ")[1]
+                mPath = line.split(" = ")[1].split("/")
+                m = mPath[len(mPath)-1].replace(" ","").replace("\n","")
+                print(m)
+                maps.append(m)
+
+    except IOError:
+        print("Log file not accessible. Does it exist?")
+    finally:
+        logFile.close()
+    
+    return maps
+    
+    
+
 if platform.system() == "Windows":
     cmd[0] = "MCS/Binaries/Win64"
     cmd[1] = "MCSServer.exe"
@@ -66,7 +101,8 @@ nameInput.grid(row=0,column=1)
 
 
 Label(mainframe,text="Map").grid(row=1)
-mapList =["P_FFA_COMPLEX","P_CARGO_BAY","P_RIFT"]
+#mapList =["P_FFA_COMPLEX","P_CARGO_BAY","P_RIFT"]
+mapList = fetchMapList()
 mapComboBox = ttk.Combobox(mainframe,values=mapList)
 mapComboBox.current(0)
 mapComboBox.grid(row=1,column=1)
