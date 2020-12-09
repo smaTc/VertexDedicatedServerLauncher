@@ -82,7 +82,7 @@ nameInput.grid(row=0,column=1)
 
 
 Label(mainframe,text="Map").grid(row=1)
-mapList =["P_FFA_COMPLEX"," P_CARGO_BAY","P_RIFT"]
+mapList =["P_FFA_COMPLEX","P_CARGO_BAY","P_RIFT"]
 mapComboBox = ttk.Combobox(mainframe,values=mapList)
 mapComboBox.current(0)
 mapComboBox.grid(row=1,column=1)
