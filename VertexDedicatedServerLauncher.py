@@ -13,30 +13,14 @@ proc = None
 
 
 def runServer(cmd,arguments):
-    
-    
     orgPath = os.getcwd()
-    
     os.chdir(cmd[0])
-
     comb = [cmd[1]] + arguments
 
-    #process = None
-
-    print(comb)
     try:
         print("Executing command:")
         print(comb)
         proc = subprocess.Popen(comb,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-        
-        """
-        stdout,stderr = process.communicate()
-        print("Output:")
-        print(stdout)
-        print()
-        print("Errors:")
-        print(stderr)
-        """
     except:
         print("Exception occured")
         traceback.print_exc()
