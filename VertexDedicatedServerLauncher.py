@@ -46,6 +46,7 @@ def evalArgs(name,map,mode,port):
 def fetchMapList():
     maps = []
     logPath = "MCS/Saved/Logs/MCS.log"
+
     if platform.system() != "Windows":
         logPath = "./" + logPath
     
@@ -66,11 +67,10 @@ def fetchMapList():
                 mPath = line.split(" = ")[1].split("/")
                 m = mPath[len(mPath)-1].replace(" ","").replace("\n","")
                 maps.append(m)
-
-    except IOError:
-        print("Log file not accessible. Does it exist?")
-    finally:
+        
         logFile.close()
+    except IOError:
+        print("Log file not accessible. Does it exist?")    
     
     return maps
     
@@ -88,19 +88,24 @@ else:
 root = Tk()
 root.title("Vertex Dedicated Server Launcher")
 
-mainframe = ttk.Frame(root, padding="3 3 3 3")
+mainframe = ttk.Frame(root, padding="3 3 3 3",width=80, height=80)
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 
 Label(mainframe,text="Servername").grid(row=0)
 nameValue = StringVar()
-nameValue.set("Vertex Dedicated Server")
+nameValue.set("Vertex Server")
 nameInput = Entry(mainframe,textvariable=nameValue)
 nameInput.grid(row=0,column=1)
 
 
 Label(mainframe,text="Map").grid(row=1)
-#mapList =["P_FFA_COMPLEX","P_CARGO_BAY","P_RIFT"]
-mapList = fetchMapList()
+
+mapList = ["P_FFA_COMPLEX","P_CARGO_BAY","P_RIFT"]
+
+fetchedMaps = fetchMapList()
+if len(fetchedMaps) > 0:
+    mapList = fetchMapList()
+
 mapComboBox = ttk.Combobox(mainframe,values=mapList)
 mapComboBox.current(0)
 mapComboBox.grid(row=1,column=1)
