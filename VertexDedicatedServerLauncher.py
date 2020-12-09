@@ -63,10 +63,8 @@ def fetchMapList():
                 if "========================" in line:
                     break 
 
-               # m = line.split("[None] ")[1].split(" = ")[1]
                 mPath = line.split(" = ")[1].split("/")
                 m = mPath[len(mPath)-1].replace(" ","").replace("\n","")
-                print(m)
                 maps.append(m)
 
     except IOError:
